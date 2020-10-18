@@ -9,27 +9,45 @@ public class Principal {
     void iniciar(){
         int ptoJugador = 0;
         int ptoCrupier = 0;
-        int otraCarta = 0;
+        int otraCarta = 1;
+        boolean turnoJugador = true;
 
-        while (otraCarta == 1){
-            if (ptoJugador < 21){darCarta();}
-            else {winLose(ptoJugador,ptoCrupier);}
-            
+        while (turnoJugador && otraCarta==1 && ptoJugador < 21){System.out.println("Jugador tomando carta...");
+        ptoJugador+=darCarta();
+        System.out.println("Quiere otra carta?\n1 para si, 0 para no");
+        otraCarta = entrada.nextInt();
+        turnoJugador = !turnoJugador;
         }
         
-
-
-        System.out.println("INICIALIZANDO... *RUIDO DE ROBOT*");
         
-    }
+
+        if (!turnoJugador && ptoCrupier < 21){
+            System.out.println("Crupier tomando carta...");
+            ptoCrupier+=darCarta();
+        }    
+    winLose(ptoJugador, ptoCrupier);
+    };
+
+        
+    
+        int tiraCrupier(){
+            
+        System.out.println("Crupier tomando carta...");
+        return darCarta();}
+    
 
     void winLose(int player, int crupier){
         
-        if (player == 21){
+        if (player <= 21 && player > crupier){
             System.out.println("Gana el player");
-        }else{System.out.println("Gana el crupier");}
-
+        
+        }
+        else if (crupier <= 21 && crupier > player){
+            System.out.println("Gana el crupier, que malo sos."); 
+        }
     }
+
+    
 
     int darCarta(){
         int puntos;
@@ -37,7 +55,7 @@ public class Principal {
         int i = azar.nextInt(13);
         String[] palo = {"corazones","diamantes","pica","trébol"};
         int j = azar.nextInt(4);
-        System.out.println(numero[i] + " de " + palo[j]);
+        System.out.println("\n"+numero[i] + " de " + palo[j]); // agrego un \n al principio para que sea más fácil ver el número
         i++;
         puntos = i;
         switch(i){
@@ -51,11 +69,9 @@ public class Principal {
         return puntos;
     }
 
-    // DECLARACIÓN DE MÉTODOS DISCRETOS AHRE
-
     public static void main(String[] args){
         Principal p = new Principal();
         p.iniciar();
-        p.darCarta();
+        System.out.println("Bienvenido al juego, le daremos una carta");        
     }
 }
