@@ -9,41 +9,80 @@ public class Principal {
     void iniciar(){
         int ptoJugador = 0;
         int ptoCrupier = 0;
-        int otraCarta = 1;
-        boolean turnoJugador = true;
+        int otraCarta = 1;  
+        int whoWon = 0; // 1 blackjack jugador - 2 blackjack crupier - 3 jugador normal - 4 crupier normal 
+                        // 5 jugador se pasa - 6 crupier se pasa
 
-        while (turnoJugador && otraCarta==1 && ptoJugador < 21){System.out.println("Jugador tomando carta...");
-        ptoJugador+=darCarta();
-        System.out.println("Quiere otra carta?\n1 para si, 0 para no");
-        otraCarta = entrada.nextInt();
-        turnoJugador = !turnoJugador;
-        }
-        
-        
+        while (whoWon == 0){                            // When someone wins, whoWon changes it value,
+            for (int i = 0; i <= 2; i++) {              // taking them out of the game
+                ptoJugador += darCarta();
+            }
+            if (ptoJugador == 21){
+            whoWon = 1;
+            }
 
-        if (!turnoJugador && ptoCrupier < 21){
-            System.out.println("Crupier tomando carta...");
-            ptoCrupier+=darCarta();
-        }    
-    winLose(ptoJugador, ptoCrupier);
-    };
+            while (ptoJugador < 21 && otraCarta == 1){
+                System.out.println("Sus puntos suman "+ptoJugador+
+                "\nQuiere otra carta?\n1 para si, 0 para no");
+                otraCarta = entrada.nextInt();
+                ptoJugador += darCarta();
+            }
+            if (ptoJugador == 21){
+                whoWon = 1;
+            }
+            if (ptoJugador > 21){
+                whoWon = 5;
+            }
 
-        
-    
-        int tiraCrupier(){
             
-        System.out.println("Crupier tomando carta...");
-        return darCarta();}
-    
+            for (int i = 0; i <= 2; i++) {
+                ptoCrupier += darCarta();
+            }
+            if (ptoCrupier == 21){
+                whoWon = 2;
+            }
+            while (ptoCrupier<=16 && ptoCrupier <= ptoJugador){
+                ptoCrupier+=darCarta();
+            }
 
-    void winLose(int player, int crupier){
-        
-        if (player <= 21 && player > crupier){
-            System.out.println("Gana el player");
-        
+            whoWon = winLose(ptoJugador, ptoCrupier);
+
         }
-        else if (crupier <= 21 && crupier > player){
-            System.out.println("Gana el crupier, que malo sos."); 
+
+        switch(whoWon){
+            case 1:
+                System.out.println("Genial, hiciste un blackjack");
+                break;
+            case 2:
+                System.out.println("El crupier hizo blackjack");
+                break;
+            case 3:
+                System.out.println("Genial, ganaste con "+ptoJugador+" puntos\nCrupier: "+ptoCrupier+" puntos");
+                break;
+            case 4:
+                System.out.println("El crupier te ganó con "+ptoCrupier+" puntos, pero ánimo, tuviste "+ptoJugador+" puntos");
+                break;
+            case 5:
+                System.out.println("Te pasaste de 21 puntos");
+                break;
+            case 6:
+                System.out.println("El crupier se pasó de 21");
+        }
+        
+    }
+
+
+    int winLose(int player, int crupier){
+        
+        if (crupier > 21){
+            return 6;
+        }
+        
+        if (player > crupier){
+            return 3;
+        }
+        else{
+            return 4;
         }
     }
 
@@ -72,6 +111,6 @@ public class Principal {
     public static void main(String[] args){
         Principal p = new Principal();
         p.iniciar();
-        System.out.println("Bienvenido al juego, le daremos una carta");        
+        System.out.println("Bienvenido al juego, le daremos dos cartas");
     }
 }
