@@ -1,3 +1,11 @@
+/*
+    Integrantes:
+        Gabriel Moreira 5474809-6
+        Delfina Talamás 5485926-1
+        Guzmán Ardao 
+
+*/
+
 package paquete;
 import java.util.Random;
 import java.util.Scanner;
