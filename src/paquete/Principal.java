@@ -21,7 +21,7 @@ public class Principal {
         int whoWon = 0; // 1 blackjack jugador - 2 blackjack crupier - 3 jugador normal - 4 crupier normal 
                         // 5 jugador se pasa - 6 crupier se pasa - 7 empate
 
-        while (whoWon == 0){                            // When someone wins, whoWon changes it value,
+        while (whoWon == 0){                            // When someone wins, whoWon changes its value,
             for (int i = 0; i < 2; i++) {              // taking them out of the game
                 ptoJugador += darCarta();
             }
@@ -30,8 +30,7 @@ public class Principal {
             }
 
             while (ptoJugador < 21 && otraCarta == 1){
-                System.out.println("Sus puntos suman "+ptoJugador+
-                "\nQuiere otra carta?\n1 para si, 0 para no");
+                System.out.println("¿Desea otra carta? (presione 1 para si):");
                 otraCarta = entrada.nextInt();
                 if (otraCarta == 1){ptoJugador += darCarta();}
             }
@@ -80,10 +79,10 @@ public class Principal {
                 System.out.println("Genial, ganaste con "+ptoJugador+" puntos\nCrupier: "+ptoCrupier+" puntos");
                 break;
             case 4:
-                System.out.println("El crupier te ganó con "+ptoCrupier+" puntos, pero ánimo, tuviste "+ptoJugador+" puntos");
+                System.out.println("Usted pierde la mano");
                 break;
             case 5:
-                System.out.println("Te pasaste de 21 puntos, tuviste "+ptoJugador);
+                System.out.println("Usted pierde la mano por superar 21);
                 break;
             case 6:
                 System.out.println("El crupier se pasó de 21, tuvo "+ptoCrupier);
@@ -143,7 +142,7 @@ public class Principal {
 
     public static void main(String[] args){
         Principal p = new Principal();
-        System.out.println("Bienvenido al juego, le daremos dos cartas");
+        System.out.println("Comienza el juego, el crupier reparte dos cartas");
         p.iniciar();
         
     }
